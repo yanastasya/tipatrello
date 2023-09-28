@@ -26,7 +26,7 @@ class Worker(models.Model):
         verbose_name_plural = 'Сотрудники'
 
     def __str__(self):
-        return self.name  
+        return f'{self.surname} {self.name} - {self.position}'
 
 
 class Task(models.Model):
@@ -47,8 +47,8 @@ class Task(models.Model):
         Worker,               
         related_name='task_and_workers',
         verbose_name='исполнитель задачи',
-    )    
-    
+    )
+
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
@@ -79,9 +79,7 @@ class Project(models.Model):
         verbose_name='Руководитель проекта',
     )    
     tasks = models.ManyToManyField(
-        Task,        
-        #on_delete=models.DO_NOTHING, #если удаляют задачу, то ничего не происходит
-        #related_name='project',
+        Task,     
         verbose_name='Задачи проекта',       
         related_name='projects',
     )

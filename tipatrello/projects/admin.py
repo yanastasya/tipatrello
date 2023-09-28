@@ -4,12 +4,16 @@ from .models import Worker, Task, Project
 
 @admin.register(Worker)
 class WorkerAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'id','surname', 'name', 'patronymic', 'position'
+    ) 
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'id','name', 'description', 'is_done',
+    )
 
 
 
