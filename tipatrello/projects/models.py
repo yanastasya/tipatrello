@@ -108,3 +108,28 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+
+class Comment(models.Model):
+    """Комментирование задач."""
+    task = models.ForeignKey(
+        Task,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Комментарий',
+    )
+
+    pub_date = models.DateTimeField(
+        'Дата создания',
+        auto_now_add=True
+    )
+    text = models.TextField(
+        'Текст',
+    )
+
+    class Meta:
+        ordering = ['-pub_date']
+        verbose_name = 'Комментарий к задаче'
+        verbose_name_plural = 'Комментарии к задаче'
+
+    def __str__(self):
+        return self.text

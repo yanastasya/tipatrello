@@ -1,0 +1,18 @@
+{% load mptt_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{task.name}}.</title>
+</head>
+<body>
+    <h1>{{task.name}}</h1>  
+    <p>{{task.description}}</p>
+    <hr>   
+    {% for worker in task.workers.all %}
+      <p>{{worker.surname}} {{worker.name}} {{worker.patronymic}} - {{worker.position}}</p>
+    {% endfor %}
+    {% include 'includes/task_comment_form.html' %}     
+</body>
+</html>
