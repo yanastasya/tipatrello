@@ -1,3 +1,4 @@
+{% load mptt_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Проекты с задачами.</title>
 </head>
-<body>
-    <div style="border-style: double; border-color: red;">
-        <h1>Название проекта</h1>
-        <p>Описание проекта</p>
+<body>  
+    {% for project in page_obj %}
+      <div style="border-style: double; border-color: red;">
+        <h1>{{project.name}}</h1>
+        <p>{{project.description}}</p>
+        
         <ul>
-            <li>Задача 1</li>
-            <li>Задача 2</li>
-        </ul>
-    </div>
+            {% recursetree project.tasks.all %}     
+                <li>
+                    <a href="{{node.get_absolute_url}}">{{node.name}}</a>
+                  {% if not node.is_leaf_node %}
+                        <ul class="children">
+                            {{ children }}
+                        </ul>
+                  {% endif %}
+                </li>
+            {% endrecursetree %}
+        </ul>          
+      </div>             
+      {% if not forloop.last %} <hr> {% endif %}
+    {% endfor %}     
 </body>
 </html>

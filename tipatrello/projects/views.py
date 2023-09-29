@@ -15,5 +15,6 @@ def index(request):
     return render(request, template, context)
 
 
-
+def TaskDetail(request):
+    return HttpResponse('БУ')
 
