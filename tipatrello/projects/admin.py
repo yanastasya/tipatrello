@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django_mptt_admin.admin import DjangoMpttAdmin
 from .models import Worker, Task, Project
+from mptt.admin import MPTTModelAdmin
 
 @admin.register(Worker)
 class WorkerAdmin(admin.ModelAdmin):
@@ -10,7 +11,7 @@ class WorkerAdmin(admin.ModelAdmin):
 
 
 @admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
+class TaskAdmin(MPTTModelAdmin):
     list_display = (
         'id','name', 'description', 'is_done',
     )

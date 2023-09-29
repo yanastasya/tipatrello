@@ -19,7 +19,7 @@ class Command(BaseCommand):
         fake = Faker(locale="ru_RU")
         fake.random.seed(4321) 
             
-        for i in range(10005):
+        for i in range(100):
             random_text = fake.text()           
                       
             task = Task(                
@@ -30,10 +30,10 @@ class Command(BaseCommand):
             )
             task.save()
             task.workers.add(
-                Worker.objects.get(id=random.randint(6, 500)),
-                Worker.objects.get(id=random.randint(100, 600)),
-                Worker.objects.get(id=random.randint(200, 800)),
-                Worker.objects.get(id=random.randint(400, 1005)),
+                Worker.objects.get(id=random.randint(1, 5)),
+                Worker.objects.get(id=random.randint(4, 10)),
+                Worker.objects.get(id=random.randint(7, 16)),
+                Worker.objects.get(id=random.randint(10, 20)),
             )
 
                     

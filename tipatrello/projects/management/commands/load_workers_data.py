@@ -18,7 +18,7 @@ class Command(BaseCommand):
         print("Загрузка...")
         fake = Faker(locale="ru_RU")
         fake.random.seed(4321)        
-        for i in range(1000):
+        for i in range(20):
             random_name = fake.name().split() 
             worker = Worker(
                 surname=random_name[0],

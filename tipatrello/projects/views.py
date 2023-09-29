@@ -7,9 +7,9 @@ def index(request):
 
     template = 'index.html'
     project_list = Project.objects.all()
-    page_obj = get_page(request, project_list)
+    #page_obj = get_page(request, project_list)
     context = {
-        'page_obj': page_obj,
+        'page_obj': project_list,
     }
 
     return render(request, template, context)

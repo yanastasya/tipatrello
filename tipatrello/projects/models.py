@@ -29,7 +29,7 @@ class Worker(models.Model):
         return f'{self.surname} {self.name} - {self.position}'
 
 
-class Task(models.Model):
+class Task(MPTTModel):
     "Связь сотрудника с конкретной задачей."
     
     name = models.CharField(
@@ -37,21 +37,33 @@ class Task(models.Model):
         max_length=50,
     )
     is_done = models.BooleanField()
-    
+
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name='children',
+        db_index=True,
+        verbose_name='Надзадача'
+    )       
     description = models.TextField(
         'Описание задачи',
         max_length=500,
     )
-
     workers = models.ManyToManyField(
-        Worker,               
+        Worker,
+        blank=True,               
         related_name='task_and_workers',
         verbose_name='исполнитель задачи',
-    )
+    )   
 
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
+
+    class MPTTMeta:
+        order_insertion_by = ['name']    
 
     def __str__(self):
         return self.name
