@@ -30,58 +30,6 @@ class Worker(models.Model):
         return f'{self.surname} {self.name} - {self.position}'
 
 
-class Task(MPTTModel):
-    "Связь сотрудника с конкретной задачей."
-    TASK_STATUS = [
-        ('Новая', 'Новая'),
-        ('В работе', 'В работе'),
-        ('Закрыта', 'Закрыта'),
-    ]
-    name = models.CharField(
-        'Название задачи',
-        max_length=50,
-    )
-    status = models.CharField(
-        'Статус задачи',
-        choices=TASK_STATUS,
-        default='Новая',
-        max_length=10,
-    )
-
-    parent = TreeForeignKey(
-        'self',
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        related_name='children',
-        db_index=True,
-        verbose_name='Надзадача'
-    )       
-    description = models.TextField(
-        'Описание задачи',
-        max_length=500,
-    )
-    workers = models.ManyToManyField(
-        Worker,
-        blank=True,               
-        related_name='task_and_workers',
-        verbose_name='исполнитель задачи',
-    )   
-
-    class Meta:
-        verbose_name = 'Задача'
-        verbose_name_plural = 'Задачи'
-
-    class MPTTMeta:
-        order_insertion_by = ['name']    
-
-    def get_absolute_url(self):
-        return reverse('projects:task-detail', args=[str(self.id)])
-    
-    def __str__(self):
-        return self.name
-
-
 class Project(models.Model):    
 
     name = models.CharField(
@@ -103,11 +51,11 @@ class Project(models.Model):
         related_name='project_as_chief',
         verbose_name='Руководитель проекта',
     )    
-    tasks = models.ManyToManyField(
-        Task,     
-        verbose_name='Задачи проекта',       
-        related_name='projects',
-    )
+    #tasks = models.ManyToManyField(
+        #Task,     
+        #verbose_name='Задачи проекта',       
+        #related_name='projects',
+    #)
 
     is_active = models.BooleanField(
         default=True,
@@ -119,7 +67,6 @@ class Project(models.Model):
         auto_now_add=True
     )
 
-
     class Meta:
         ordering = ['-pub_date']
         verbose_name = 'Проект'
@@ -127,6 +74,66 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Task(MPTTModel):
+    "Связь сотрудника с конкретной задачей."
+    TASK_STATUS = [
+        ('Новая', 'Новая'),
+        ('В работе', 'В работе'),
+        ('Закрыта', 'Закрыта'),
+    ]
+    name = models.CharField(
+        'Название задачи',
+        max_length=50,
+    )
+    status = models.CharField(
+        'Статус задачи',
+        choices=TASK_STATUS,
+        default='Новая',
+        max_length=10,
+    )
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name='children',
+        db_index=True,
+        verbose_name='Надзадача'
+    )       
+    description = models.TextField(
+        'Описание задачи',
+        max_length=500,
+    )
+    workers = models.ManyToManyField(
+        Worker,
+        blank=True,               
+        related_name='task_and_workers',
+        verbose_name='исполнитель задачи',
+    )
+    project = models.ForeignKey(
+        Project,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='tasks',
+        verbose_name='Относится к проекту',        
+    )   
+
+    class Meta:
+        verbose_name = 'Задача'
+        verbose_name_plural = 'Задачи'
+
+    class MPTTMeta:
+        order_insertion_by = ['name']    
+
+    def get_absolute_url(self):
+        return reverse('projects:task-detail', args=[str(self.id)])
+    
+    def __str__(self):
+        return self.name
+
 
 
 class Comment(models.Model):

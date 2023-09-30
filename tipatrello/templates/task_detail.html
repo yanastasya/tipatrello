@@ -5,11 +5,16 @@
 
 {% block content %}
   <h1>{{task.name}}</h1>  
-  <p>{{task.description}}</p>
+  <h3> cтатус: {{task.status}} </h3>
   <hr>   
+  <p>{{task.description}}</p>
+  <hr>
+  <h4>Ответственные сотрудники:<h4>
+  <ul>     
   {% for worker in task.workers.all %}
-    <p>{{worker.surname}} {{worker.name}} {{worker.patronymic}} - {{worker.position}}</p>
+    <li>{{worker.surname}} {{worker.name}} {{worker.patronymic}} - {{worker.position}}</li>
   {% endfor %}
+  </ul>
   {% include 'includes/task_comment_form.html' %}
 {% endblock %}
 

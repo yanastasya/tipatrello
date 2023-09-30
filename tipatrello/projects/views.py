@@ -17,6 +17,7 @@ def index(request):
     context = {
         'page_obj': project_list,
     }
+    
     return render(request, template, context)
 
 

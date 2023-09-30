@@ -8,18 +8,26 @@ class WorkerAdmin(admin.ModelAdmin):
     list_display = (
         'id','surname', 'name', 'patronymic', 'position'
     ) 
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 0
 
+class TaskInline(admin.TabularInline):
+    model = Task
+    extra = 0
 
 @admin.register(Task)
 class TaskAdmin(MPTTModelAdmin):
+    inlines = [CommentInline]
     list_display = (
-        'id','name', 'description', 'status',
+        'id','name', 'description', 'status', 'comments',
     )
 
 @admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):    
+class ProjectAdmin(admin.ModelAdmin):
+    inlines = [TaskInline]    
     list_display = (
-        'name', 'deadline', 'chief', 'is_active'
+        'name', 'deadline', 'chief', 'is_active',
     )    
 
 
