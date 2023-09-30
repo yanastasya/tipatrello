@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +29,7 @@ INSTALLED_APPS = [
     "projects.apps.ProjectsConfig",
     'mptt',
     'django_mptt_admin',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -41,11 +43,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "tipatrello.urls"
-
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates"],
+        "DIRS": [TEMPLATES_DIR],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -57,7 +59,9 @@ TEMPLATES = [
         },
     },
 ]
+STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 WSGI_APPLICATION = "tipatrello.wsgi.application"
 
 

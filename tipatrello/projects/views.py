@@ -3,16 +3,20 @@ from django.http import HttpResponse
 from .models import Project,Task,Worker
 from .utils import get_page
 from .form import CommentForm
+from django_filters.views import FilterView
+from .filters import ProjectFilter
+ 
+class ProjectListView(FilterView):
+    model = Project
+    template_name = 'index.html'
+    filterset_class = ProjectFilter
 
-def index(request):   
-
+def index(request):
     template = 'index.html'
-    project_list = Project.objects.all()
-    #page_obj = get_page(request, project_list)
+    project_list = Project.objects.all()    
     context = {
         'page_obj': project_list,
     }
-
     return render(request, template, context)
 
 

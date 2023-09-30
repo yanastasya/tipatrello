@@ -18,8 +18,8 @@ class Command(BaseCommand):
         print("Загрузка данных о задачах")
         fake = Faker(locale="ru_RU")
         fake.random.seed(4321) 
-        n=51    
-        for i in range(250):
+        n=5    
+        for i in range(25):
             random_text = fake.text()
             random_date = fake.date()        
                   
@@ -27,17 +27,17 @@ class Command(BaseCommand):
                 name=f'Проект {i}',
                 description=random_text[:500],
                 is_done = False,
-                chief=Worker.objects.get(id=random.randint(6, 1005)),
+                chief=Worker.objects.get(id=random.randint(0, 19)),
                 deadline = random_date,
             )
             project.save()
             
-            for j in range(n,(n+40)):
+            for j in range(n,(n+5)):
                 #print(f'id задачи {}')
                 project.tasks.add(
                     Task.objects.get(id=j),
                 )
-        n+=40        
+        n+=5        
 
                     
 

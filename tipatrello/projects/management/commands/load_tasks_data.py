@@ -25,7 +25,7 @@ class Command(BaseCommand):
             task = Task(                
                 name=f'Задача {i}',
                 description=random_text[:500],
-                is_done = False,
+                status = 'Новая',
                 #workers=Worker.objects.get(id=random.randint(0, 1000)),
             )
             task.save()

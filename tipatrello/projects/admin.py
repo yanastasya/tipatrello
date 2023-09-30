@@ -13,18 +13,18 @@ class WorkerAdmin(admin.ModelAdmin):
 @admin.register(Task)
 class TaskAdmin(MPTTModelAdmin):
     list_display = (
-        'id','name', 'description', 'is_done',
+        'id','name', 'description', 'status',
     )
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):    
     list_display = (
-        'name', 'deadline', 'chief', 'is_done'
+        'name', 'deadline', 'chief', 'is_active'
     )    
 
 
 @admin.register(Comment)
-class ProjectAdmin(admin.ModelAdmin):    
+class CommentAdmin(admin.ModelAdmin):    
     list_display = (
         'text', 'pub_date', 'task',
     )    
