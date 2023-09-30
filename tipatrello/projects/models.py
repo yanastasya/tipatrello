@@ -95,7 +95,7 @@ class Task(MPTTModel):
     )
     parent = TreeForeignKey(
         'self',
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
         related_name='children',

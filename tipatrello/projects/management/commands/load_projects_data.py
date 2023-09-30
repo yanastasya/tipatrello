@@ -26,7 +26,7 @@ class Command(BaseCommand):
             project = Project(                
                 name=f'Проект {i}',
                 description=random_text[:500],
-                is_active = False,
+                is_active = True,
                 chief=Worker.objects.get(id=random.randint(0, 19)),
                 deadline = random_date,
             )

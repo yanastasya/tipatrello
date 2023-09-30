@@ -20,7 +20,7 @@ class TaskInline(admin.TabularInline):
 class TaskAdmin(MPTTModelAdmin):
     inlines = [CommentInline]
     list_display = (
-        'id','name', 'description', 'status', 'comments',
+        'id','name', 'description', 'status',
     )
 
 @admin.register(Project)
