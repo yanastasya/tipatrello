@@ -44,3 +44,5 @@
 ```python manage.py createsuperuser```
 8)  запустить проект локально: ```python manage.py runserver```</br>
 [:arrow_up:Оглавление](#Оглавление)
+
+автор: Клинцова Анастасия Павловна
