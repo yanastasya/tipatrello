@@ -2,26 +2,36 @@
 {% load mptt_tags %}
 
 {% block title %}Проекты{% endblock %}
+{% load cache %}
 
 {% block content %}
+{% cache 500 sidebar %}
   {% for project in page_obj %}
     <div class="container project-card">
-      <h1>{{project.name}}</h1>
-      <p>{{project.description}}</p>    
-      <ul>
-        {% recursetree project.tasks.all %}               
-          <li>
-            <a href="{{node.get_absolute_url}}">{{node.name}} ({{node.status}})</a>
-            {% if not node.is_leaf_node %}
-              <ul class="children">
-                {{ children }}
-              </ul>
-            {% endif %}
-          </li>
-        {% endrecursetree %}
-      </ul> 
-      <strong>Срок исполнения: {{project.deadline|date:"d.m.Y"}}</strong>       
+      <div class="row">
+        <div class="col">
+          <h1>{{project.name}}</h1>
+          <p>{{project.description}}</p>
+          <strong><u>Руководитель проекта:</u> {{project.chief.surname}} {{project.chief.name}}</strong><br>
+          <strong><u>Срок исполнения:</u> {{project.deadline|date:"d.m.Y"}}</strong> 
+        </div>
+        <div class="col">
+          <ul>
+            {% recursetree project.tasks.all %}               
+              <li>
+                <a href="{{node.get_absolute_url}}">{{node.name}} ({{node.status}})</a>
+                {% if not node.is_leaf_node %}
+                  <ul class="children">
+                    {{ children }}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endrecursetree %}
+          </ul>
+        </div>
+      </div>           
     </div>             
   {% if not forloop.last %} <hr> {% endif %}
 {% endfor %}
+{% endcache %} 
 {% endblock %}

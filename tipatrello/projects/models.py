@@ -34,7 +34,7 @@ class Project(models.Model):
     "Проекты."
     name = models.CharField(
         'Название проекта',
-        max_length=20,
+        max_length=200,
     )
     deadline = models.DateField(
         'Срок исполнения',
@@ -80,7 +80,7 @@ class Task(MPTTModel):
     ]
     name = models.CharField(
         'Название задачи',
-        max_length=50,
+        max_length=200,
     )
     status = models.CharField(
         'Статус задачи',
@@ -100,6 +100,8 @@ class Task(MPTTModel):
     description = models.TextField(
         'Описание задачи',
         max_length=500,
+        null=True,
+        blank=True,
     )
     workers = models.ManyToManyField(
         Worker,
@@ -115,13 +117,19 @@ class Task(MPTTModel):
         related_name='tasks',
         verbose_name='Относится к проекту',
     )
+    pub_date = models.DateTimeField(
+        'Дата создания',
+        null=True,
+        auto_now_add=True,
+    )
 
     class Meta:
+        ordering = ['-pub_date']
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['pub_date']
 
     def get_absolute_url(self):
         return reverse('projects:task-detail', args=[str(self.id)])
