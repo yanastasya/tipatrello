@@ -14,7 +14,7 @@
   {% for worker in task.workers.all %}
     <li>{{worker.surname}} {{worker.name}} {{worker.patronymic}} - {{worker.position}}</li>
   {% endfor %}
-  </ul>
+  </ul> 
   {% include 'includes/task_comment_form.html' %}
 {% endblock %}
 

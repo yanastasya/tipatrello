@@ -1,41 +1,41 @@
-from csv import DictReader
+import random
+from faker import Faker
 
 from django.core.management import BaseCommand
 
-from projects.models import Worker, Task
-import random
-from random import shuffle
-from faker import Faker
+from projects.models import Worker, Task, Project
 
-  
 
 class Command(BaseCommand):
-    # Show this when the user types help
-    help = "Загрузка данных о сотрудниках.(тестовые данные о 1000 сотрудниках будут сгенерированы случайным образом)"
+    """Команда для заполнения данными таблицы Task (задачи.),
+    без прикрепления к проектам."""
+
+    help = (
+        "Загрузка данных о задачах",
+        "(тестовые данные о 10000 задачах будут",
+        "сгенерированы случайным образом)."
+    )
 
     def handle(self, *args, **options):
 
         print("Загрузка данных о задачах")
         fake = Faker(locale="ru_RU")
-        fake.random.seed(4321) 
-            
-        for i in range(100):
-            random_text = fake.text()           
-                      
-            task = Task(                
+        fake.random.seed(4321)
+
+        for i in range(10000):
+            random_text = fake.text()
+            task = Task(
                 name=f'Задача {i}',
                 description=random_text[:500],
-                status = 'Новая',
-                #workers=Worker.objects.get(id=random.randint(0, 1000)),
+                project=Project.objects.get(id=random.randint(1, 250)),
+                status='Новая'
             )
             task.save()
             task.workers.add(
-                Worker.objects.get(id=random.randint(1, 5)),
-                Worker.objects.get(id=random.randint(4, 10)),
-                Worker.objects.get(id=random.randint(7, 16)),
-                Worker.objects.get(id=random.randint(10, 20)),
+                Worker.objects.get(id=random.randint(1, 250)),
+                Worker.objects.get(id=random.randint(200, 600)),
+                Worker.objects.get(id=random.randint(350, 750)),
+                Worker.objects.get(id=random.randint(600, 1000)),
             )
 
-                    
-
-        print(f'Тестовые данные о задачах успешно загружены')
+        print('Тестовые данные о задачах успешно загружены')
