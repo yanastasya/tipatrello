@@ -6,11 +6,11 @@
 
 {% block content %}
 {% cache 500 sidebar %}
-  {% for project in page_obj %}
-    <div class="container project-card">
+  {% for project in page_obj %}      
+    <div class="container m-3 p-3 border border-dark rounded">
       <div class="row">
         <div class="col">
-          <h1>{{project.name}}</h1>
+          <h1>{{project.name|upper}}</h1>
           <p>{{project.description}}</p>
           <strong><u>Руководитель проекта:</u> {{project.chief.surname}} {{project.chief.name}}</strong><br>
           <strong><u>Срок исполнения:</u> {{project.deadline|date:"d.m.Y"}}</strong> 

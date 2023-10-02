@@ -4,10 +4,10 @@
 {% block title %}{{task.name}}{% endblock %}
 
 {% block content %}
-  <h1>{{task.name}}</h1>  
-  <h3> cтатус: {{task.status}} </h3>
+  <h1>{{task.name|upper}}</h1>  
+  <h3> cтатус: {{task.status|lower}} </h3>
   <hr>   
-  <p>{{task.description}}</p>
+  <p>{{task.description|lower}}</p>
   <hr>
   <div class="col">    
   </div>
